@@ -76,7 +76,7 @@ module WepayClient
     def get_access_token(auth_code, redirect_uri)
       json = post('/oauth2/token', nil, {'client_id' => client_id, 'client_secret' => client_secret, 'redirect_uri' => redirect_uri, 'code' => auth_code })
       raise WepayClient::Exceptions::AccessTokenError.new("A problem occurred trying to get the access token: #{json.inspect}") unless json.has_key?(:access_token)
-      json[:access_token]
+      json
     end
 
     protected
