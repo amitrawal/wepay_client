@@ -22,8 +22,8 @@ module WepayClient
     attr_reader :api_endpoint, :ui_endpoint
 
     def initialize()
-      self.api_end_point = PRODUCTION_API_ENDPOINT
-      self.ui_end_point  = PRODUCTION_UI_ENDPOINT
+      @api_endpoint = PRODUCTION_API_ENDPOINT
+      @ui_endpoint  = PRODUCTION_UI_ENDPOINT
     end
 
     def self.configure(&blk)
@@ -37,11 +37,11 @@ module WepayClient
 
     def use_stage(_use_stage)
       if _use_stage
-        self.api_end_point = STAGE_API_ENDPOINT
-        self.ui_end_point  = STAGE_UI_ENDPOINT
+        @api_endpoint = STAGE_API_ENDPOINT
+        @ui_endpoint  = STAGE_UI_ENDPOINT
       else
-        self.api_end_point = PRODUCTION_API_ENDPOINT
-        self.ui_end_point  = PRODUCTION_UI_ENDPOINT
+        @api_endpoint = PRODUCTION_API_ENDPOINT
+        @ui_endpoint  = PRODUCTION_UI_ENDPOINT
       end
     end
 
