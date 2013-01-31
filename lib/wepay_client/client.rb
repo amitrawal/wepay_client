@@ -19,6 +19,13 @@ module WepayClient
     CLIENT_ID              = '123456'
     CLIENT_SECRET          = '123456'
 
+    attr_reader :api_endpoint, :ui_endpoint
+
+    def initialize()
+      @api_endpoint = PRODUCTION_API_ENDPOINT
+      @ui_endpoint  = PRODUCTION_UI_ENDPOINT
+    end
+
     def self.configure(&blk)
       self.instance.configure &blk
     end
@@ -28,30 +35,19 @@ module WepayClient
       instance_eval &blk
     end
 
-    def api_endpoint
-      if @use_stage
-        STAGE_API_ENDPOINT
+    def use_stage(_use_stage)
+      if _use_stage
+        @api_endpoint = STAGE_API_ENDPOINT
+        @ui_endpoint  = STAGE_UI_ENDPOINT
       else
-        PRODUCTION_API_ENDPOINT
+        @api_endpoint = PRODUCTION_API_ENDPOINT
+        @ui_endpoint  = PRODUCTION_UI_ENDPOINT
       end
-    end
-
-    def ui_endpoint
-      if @use_stage
-        STAGE_UI_ENDPOINT
-      else
-        PRODUCTION_UI_ENDPOINT
-      end
-    end
-
-    def use_stage(_use_stage = nil)
-      @use_stage = _use_stage if _use_stage
-      @use_stage
     end
 
     def use_ssl(_use_ssl = nil)
-      @use_stage = _use_ssl if _use_ssl
-      @use_stage
+      @use_ssl = _use_ssl if _use_ssl
+      @use_ssl
     end
 
     def client_secret(secret = nil)
