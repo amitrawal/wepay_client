@@ -1,8 +1,10 @@
-require 'wepay_client/version'
-require 'wepay_client/client'
-require 'wepay_client/account'
-require 'wepay_client/checkout'
-require 'wepay_client/preapproval'
-require 'wepay_client/exceptions'
+require File.expand_path('../wepay_client/error', __FILE__)
+require File.expand_path('../wepay_client/configuration', __FILE__)
+require File.expand_path('../wepay_client/api', __FILE__)
+require File.expand_path('../wepay_client/client', __FILE__)
+
+module WepayClient
+  extend Configuration
+end
 
 
