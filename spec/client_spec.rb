@@ -1,38 +1,20 @@
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe 'WepayClient::Client' do
   before(:all) do
-    configure_client
-    @client = WepayClient::Client.instance
+    @client = WepayClient::Client.new(:access_token => 'a_valid_token')
   end
 
-  it 'should return proper auth_code_url' do
-    url = @client.auth_code_url 'http://test.com'
-    url.should_not be_nil
+  it 'raises error if request status is 400 or more' do
+    stub_request(:post, /https:\/\/stage.wepayapi.com\/v2\.*/).with(:headers => {'Authorization: Bearer' => 'a_valid_token'}).to_return(:status => 401, :body => fixture('error.json'))
+    expect do
+      @client.find_account
+    end.to raise_error WepayClient::Error
   end
 
-  it 'should return access_token on get_access_token' do
-    return_json_for_api_request response_for_access_token
-    access_token = @client.get_access_token '123456', 'http://test.com'
-    access_token.should_not be_nil
-  end
-
-  it 'should raise AccessTokenError exception if access_token is not return by get_access_token' do
-    return_json_for_api_request "{}"
-    lambda { @client.get_access_token '123456', 'http://test.com' }.should raise_error(WepayClient::Exceptions::AccessTokenError)
-  end
-
-  it 'should create an account on create_account' do
-    return_json_for_api_request response_for_create_account
-
-    account_resp = @client.create_account '123456',{
-        "name" => "Example Account",
-        "description" => "This is just an example WePay account.",
-        "reference_id" => "abc123",
-        "image_uri" => "https://stage.wepay.com/img/logo.png"
-    }
-
-    account_resp.should_not be_nil
-    account_resp[:account_id].should_not be_nil
+  it 'can get access token' do
+    stub_request(:post, 'https://stage.wepayapi.com/v2/oauth2/token').to_return(:body => fixture('access_token_success.json'))
+    token = @client.get_access_token('code', 'http://example.com')
+    token['access_token'].should_not be_nil
   end
 end

@@ -11,7 +11,7 @@ module WepayClient
 
     # this function makes a call to the oauth2/token endpoint to exchange a code for an access_token
     def get_access_token(code, redirect_uri)
-      response = post('/oauth2/token', {'client_id' => client_id, 'client_secret' => client_secret, 'redirect_uri' => redirect_uri, 'code' => code })
+      response = post('oauth2/token', {'client_id' => client_id, 'client_secret' => client_secret, 'redirect_uri' => redirect_uri, 'code' => code })
       response
     end
   end

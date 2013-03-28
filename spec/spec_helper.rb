@@ -1,21 +1,16 @@
-require 'rubygems'
-require 'bundler/setup'
 require 'wepay_client'
+require 'rspec'
+require 'webmock/rspec'
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.join(File.dirname(__FILE__), 'helpers/*.rb')].each {|f| require f}
 
-RSpec.configure do |config|
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  #config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
+def fixture_path
+  File.expand_path("../fixtures", __FILE__)
+end
 
-  config.include MockHelper
-  config.include ConfigHelper
-  config.include WepayResponse
+def fixture(file)
+  File.new(fixture_path + '/' + file)
 end

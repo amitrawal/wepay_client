@@ -1,0 +1,8 @@
+{
+    "account_id":12345,
+    "name":"Example account",
+    "description":"this account is just an example.  Modify the text.",
+    "reference_id":"abc123",
+    "account_uri":"https://stage.wepay.com/account/12345",
+    "payment_limit":"2000"
+}
