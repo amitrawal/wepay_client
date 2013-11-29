@@ -127,7 +127,7 @@ module WepayClient
         if ['invalid code parameter','the code has expired','this access_token has been revoked', 'a valid access_token is required'].include?(json[:error_description])
           raise WepayClient::Exceptions::ExpiredTokenError.new("Token either expired, revoked or invalid: #{json[:error_description]}")
         else
-          raise WepayClient::Exceptions::WepayApiError.new(json[:error_description])
+          raise WepayClient::Exceptions::WepayApiError.new(json[:error_description], json[:error_code])
         end
       end
     end
